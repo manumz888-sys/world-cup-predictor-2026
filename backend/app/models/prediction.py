@@ -13,7 +13,7 @@ class Prediction(Base):
     match_id: Mapped[int] = mapped_column(Integer, ForeignKey("matches.id"), nullable=False)
     predicted_home_score: Mapped[int] = mapped_column(Integer, nullable=False)
     predicted_away_score: Mapped[int] = mapped_column(Integer, nullable=False)
-    points_earned: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    points_earned: Mapped[int | None] = mapped_column(Integer, nullable=True, default=None)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), onupdate=func.now(), nullable=False
