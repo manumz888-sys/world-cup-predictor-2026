@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import HeaderSponsor from "@/components/ads/HeaderSponsor";
 
 const LINKS = [
   { href: "/dashboard",   label: "DASHBOARD"   },
@@ -23,6 +24,9 @@ export default function Navbar() {
           WORLD CUP PREDICTOR 2026
         </span>
       </div>
+
+      {/* Header sponsor */}
+      <HeaderSponsor />
 
       {/* Nav links */}
       <nav className="flex items-center gap-1">

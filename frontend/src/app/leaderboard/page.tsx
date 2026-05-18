@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { LeaderboardEntry } from "@/types";
+import LeaderboardSponsor from "@/components/ads/LeaderboardSponsor";
 
 const DEMO_USER_ID = 1;
 const MEDAL: Record<number, string> = { 1: "🥇", 2: "🥈", 3: "🥉" };
@@ -63,6 +64,9 @@ export default function LeaderboardPage() {
           })}
         </div>
       )}
+
+      {/* Leaderboard sponsor */}
+      <LeaderboardSponsor />
 
       {/* Full table */}
       {loading ? (

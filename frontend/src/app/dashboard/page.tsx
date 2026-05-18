@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Match, LeaderboardEntry } from "@/types";
+import OddsWidget from "@/components/ads/OddsWidget";
+import BracketAd from "@/components/ads/BracketAd";
+import LeaderboardSponsor from "@/components/ads/LeaderboardSponsor";
 
 /* ── helpers ───────────────────────────────────────────────────── */
 const FLAG: Record<string, string> = {
@@ -138,6 +141,9 @@ function FeaturedMatchCard({ match }: { match: Match }) {
       {/* Win probability */}
       <WinProbBar homeCode={homeCode} awayCode={awayCode} homeProb={homeProb} />
 
+      {/* Odds widget ad */}
+      <OddsWidget homeCode={homeCode} awayCode={awayCode} homeProb={homeProb} />
+
       {/* Predicted score */}
       <div className="flex gap-3">
         <div className="flex-1 rounded-lg border border-white/5 bg-white/[0.03] p-3">
@@ -268,11 +274,14 @@ function TournamentBracket({ matches }: { matches: Match[] }) {
         ))}
       </div>
 
-      {/* Matches grid */}
-      <div className="grid grid-cols-1 gap-2 overflow-y-auto" style={{ maxHeight: 320 }}>
-        {(byStage[active] ?? []).map(m => (
-          <BracketMatch key={m.id} match={m} />
-        ))}
+      {/* Matches grid + bracket ad */}
+      <div className="flex gap-3" style={{ minHeight: 0 }}>
+        <div className="flex-1 grid grid-cols-1 gap-2 overflow-y-auto" style={{ maxHeight: 320 }}>
+          {(byStage[active] ?? []).map(m => (
+            <BracketMatch key={m.id} match={m} />
+          ))}
+        </div>
+        <BracketAd />
       </div>
 
       {/* Projected winner */}
@@ -334,7 +343,8 @@ function TopPredictors({ entries }: { entries: LeaderboardEntry[] }) {
       <div className="flex items-center justify-between mb-3">
         <h2 className="font-exo text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">Top Predictors</h2>
       </div>
-      <div className="space-y-2" data-testid="leaderboard-table">
+      <LeaderboardSponsor />
+      <div className="space-y-2 mt-3" data-testid="leaderboard-table">
         {entries.slice(0, 5).map((e, i) => (
           <div key={e.user_id}
                data-testid="leaderboard-row"
