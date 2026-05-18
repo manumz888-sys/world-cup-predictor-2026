@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
@@ -9,10 +10,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-cyber-bg text-slate-200 antialiased">
+    <html lang="en">
+      <body className="min-h-screen bg-[#050a14] text-slate-200 antialiased">
+        <Sidebar />
         <Navbar />
-        <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+        {/* offset sidebar (56px) + topbar (48px) */}
+        <main className="relative z-10 ml-14 mt-12 min-h-[calc(100vh-48px)] p-4 lg:p-5">
+          {children}
+        </main>
       </body>
     </html>
   );

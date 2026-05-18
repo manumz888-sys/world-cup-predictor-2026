@@ -1,15 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import Navbar from "@/components/Navbar";
 
-// next/navigation is used inside Navbar
 jest.mock("next/navigation", () => ({
   usePathname: () => "/dashboard",
 }));
 
 describe("Navbar", () => {
-  it("renders the logo", () => {
+  it("renders the brand text", () => {
     render(<Navbar />);
-    expect(screen.getByText(/WCP 2026/i)).toBeInTheDocument();
+    expect(screen.getByText(/WORLD CUP PREDICTOR 2026/i)).toBeInTheDocument();
   });
 
   it("renders Dashboard nav link", () => {
@@ -24,11 +23,8 @@ describe("Navbar", () => {
     expect(screen.getByTestId("nav-link-leaderboard")).toHaveAttribute("href", "/leaderboard");
   });
 
-  it("renders exactly 2 nav links", () => {
+  it("renders at least 2 navigation links", () => {
     render(<Navbar />);
-    const links = screen.getAllByRole("link");
-    // logo link + dashboard + leaderboard = 3
-    expect(links.length).toBeGreaterThanOrEqual(2);
     expect(screen.getByTestId("nav-link-dashboard")).toBeInTheDocument();
     expect(screen.getByTestId("nav-link-leaderboard")).toBeInTheDocument();
   });

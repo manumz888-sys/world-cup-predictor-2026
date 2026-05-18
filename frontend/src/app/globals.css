@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;900&family=Share+Tech+Mono&display=swap");
+/* ── Google Fonts ── */
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;900&family=Share+Tech+Mono&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,28 +10,51 @@
   --font-share-tech-mono: "Share Tech Mono", monospace;
 }
 
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   background-color: #050a14;
   color: #e2e8f0;
   font-family: var(--font-share-tech-mono), monospace;
+  overflow-x: hidden;
 }
 
+/* Stadium background radial glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,212,255,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 90% 40%,  rgba(120,60,255,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 10% 60%,  rgba(0,255,136,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #050a14; }
+::-webkit-scrollbar-thumb { background: #1a2d4a; border-radius: 2px; }
+
+/* Shimmer */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
-
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    #0a1628 25%,
-    #1a2d4a 50%,
-    #0a1628 75%
-  );
+  background: linear-gradient(90deg, #0a1628 25%, #1a2d4a 50%, #0a1628 75%);
   background-size: 200% 100%;
   animation: shimmer 1.8s infinite;
 }
+
+/* Win-prob bar animation */
+@keyframes grow-right { from { width: 0; } }
+@keyframes grow-left  { from { width: 0; } }
+.prob-bar { animation: grow-right 0.8s ease-out forwards; }
