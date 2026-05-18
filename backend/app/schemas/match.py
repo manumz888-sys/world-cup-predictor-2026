@@ -1,4 +1,29 @@
+from datetime import datetime
 from pydantic import BaseModel, Field
+
+
+class TeamInMatch(BaseModel):
+    id: int
+    name: str
+    country_code: str
+    group_name: str | None
+    flag_url: str | None
+    model_config = {"from_attributes": True}
+
+
+class MatchResponse(BaseModel):
+    id: int
+    home_team_id: int
+    away_team_id: int
+    home_team: TeamInMatch | None
+    away_team: TeamInMatch | None
+    match_date: datetime
+    venue: str | None
+    stage: str
+    home_score: int | None
+    away_score: int | None
+    status: str
+    model_config = {"from_attributes": True}
 
 
 class MatchClose(BaseModel):

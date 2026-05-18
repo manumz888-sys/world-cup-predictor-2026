@@ -1,5 +1,5 @@
 from .prediction import PredictionCreate, PredictionUpdate, PredictionResponse
-from .match import MatchClose, MatchPredictionsResponse
+from .match import MatchClose, MatchPredictionsResponse, MatchResponse
 from .leaderboard import LeaderboardEntry
 from .ai_insight import AIInsightResponse
 

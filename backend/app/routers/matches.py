@@ -3,11 +3,39 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Match, Prediction, User
-from app.schemas import MatchClose, MatchPredictionsResponse
+from app.schemas import MatchClose, MatchPredictionsResponse, MatchResponse
 from app.schemas.match import MatchPredictionItem
 from app.services.scoring import calculate_points
 
 router = APIRouter(prefix="/api/matches", tags=["matches"])
+
+
+@router.get("/", response_model=list[MatchResponse])
+def list_matches(status: str | None = None, db: Session = Depends(get_db)):
+    from app.models import Team
+    q = db.query(Match)
+    if status:
+        q = q.filter(Match.status == status)
+    matches = q.order_by(Match.match_date).all()
+    result = []
+    for m in matches:
+        home_team = db.get(Team, m.home_team_id)
+        away_team = db.get(Team, m.away_team_id)
+        m.home_team = home_team
+        m.away_team = away_team
+        result.append(m)
+    return result
+
+
+@router.get("/{match_id}", response_model=MatchResponse)
+def get_match(match_id: int, db: Session = Depends(get_db)):
+    from app.models import Team
+    match = db.get(Match, match_id)
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    match.home_team = db.get(Team, match.home_team_id)
+    match.away_team = db.get(Team, match.away_team_id)
+    return match
 
 
 @router.post("/{match_id}/close")
